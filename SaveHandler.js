@@ -1,4 +1,4 @@
-const CLIENT_ID = 'AIzaSyC8mXpWdYPlFm9gNXzQRvtPyEKK3KW23Pg'; // Replace with your client ID
+const CLIENT_ID = '150297208483-916ueua8cqclorl5c54um6rbrai5mhpp.apps.googleusercontent.com'; // Replace with your client ID
 const API_KEY = 'a94efdc247d49c58ff4b0660e27f119dfeffda7f'; // Replace with your API Key
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
