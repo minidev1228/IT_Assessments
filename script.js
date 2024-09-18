@@ -345,7 +345,6 @@ function addEventListeners() {
   });
 
   nextBtn.addEventListener('click', () => {
-    saveResult();
     if (!validateCurrentStep()) return; // Prevent if validation fails
     if (currentStep < totalSteps - 1) {
         currentStep++;
@@ -372,27 +371,6 @@ function addEventListeners() {
     }
   });
 }
-
-let exeId = "https://script.google.com/macros/s/AKfycbxPJ4uWrF9ZkpiATxDLqIYHMhiciCikrV_lWm71Q8Eh9TW2Y4O-uG4hbGAIeqYquyp8qg/exec";
-
-function saveResult() {
-  console.log("saving..");
-  $.ajax({
-    url: exeId,
-    data: JSON.stringify({name:"fdg", gender:"boy", age: "43"}),
-    method: "post",
-    success: function (response) {
-      console.log("Saved Success", response);
-      return false
-    },
-    error: function (err) {
-      console.log("Save Faild", err);
-      return false
-    },
-  });
-}
-
-saveResult();
 
 // Initialize form generation
 fetchSheetData();
