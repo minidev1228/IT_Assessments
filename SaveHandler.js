@@ -1,5 +1,5 @@
-const CLIENT_ID = '150297208483-916ueua8cqclorl5c54um6rbrai5mhpp.apps.googleusercontent.com'; // Replace with your client ID
-const API_KEY = 'AIzaSyC8mXpWdYPlFm9gNXzQRvtPyEKK3KW23Pg'; // Replace with your API Key
+const CLIENT_ID = '855795728925-dursk7kambmj73am0hfti1mssm8np97m.apps.googleusercontent.com'; // Replace with your client ID
+const API_KEY = 'AIzaSyCZSTD40hZzNIm9PUrQXdAXzHI2HSL1zyI'; // Replace with your API Key
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
