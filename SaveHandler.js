@@ -1,5 +1,5 @@
-// const CLIENT_ID = '855795728925-dursk7kambmj73am0hfti1mssm8np97m.apps.googleusercontent.com'; // Replace with your client ID
-// const API_KEY = 'AIzaSyCZSTD40hZzNIm9PUrQXdAXzHI2HSL1zyI'; // Replace with your API Key
+// const CLIENT_ID = ''; // Replace with your client ID
+// const API_KEY = ''; // Replace with your API Key
 // const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 // const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
@@ -46,37 +46,49 @@
 
 // // Load the API client and auth2 library
 // handleClientLoad();
-
+const CLIENT_ID = '855795728925-dursk7kambmj73am0hfti1mssm8np97m.apps.googleusercontent.com'; // Replace with your client ID
 const API_KEY = 'AIzaSyCZSTD40hZzNIm9PUrQXdAXzHI2HSL1zyI'; // Replace with your API key
-const SHEET_ID = '19R2XiKl-Bo0O7w_-X1FRvby61kqlqC7quC6ZBskGQaA'; // Replace with your Google Sheet ID
-const RANGE = 'Sheet1!A:J'; // Adjust the range as needed
+const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
-async function appendData(values) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}:append?valueInputOption=RAW&key=${API_KEY}`;
-
-  const body = {
-    values: [values]
-  };
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('Data appended successfully:', data);
-  } catch (error) {
-    console.error('Error appending data:', error);
-  }
+function handleClientLoad() {
+    gapi.load('client:auth2', initClient);
 }
 
-// Example usage
-appendData(['John Doe', 'Boy', 43]);
+function initClient() {
+    gapi.client.init({
+    apiKey: API_KEY,
+    clientId: CLIENT_ID,
+    discoveryDocs: DISCOVERY_DOCS,
+    scope: SCOPES
+    }).then(() => {
+    gapi.auth2.getAuthInstance().signIn().then(() => {
+        appendData(['John Doe', 'Boy', 43]);
+    });
+    });
+}
+
+function appendData(values) {
+    const SHEET_ID = '19R2XiKl-Bo0O7w_-X1FRvby61kqlqC7quC6ZBskGQaA'; // Replace with your Google Sheet ID
+    const RANGE = 'Sheet1!A:J'; // Adjust the range as needed
+
+    const params = {
+    spreadsheetId: SHEET_ID,
+    range: RANGE,
+    valueInputOption: 'RAW',
+    insertDataOption: 'INSERT_ROWS',
+    };
+
+    const valueRangeBody = {
+    "range": RANGE,
+    "values": [values],
+    };
+
+    gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody).then((response) => {
+    console.log(`${response.result.updates.updatedCells} cells appended.`);
+    }, (error) => {
+    console.error('Error appending data:', error);
+    });
+}
+
+handleClientLoad()
