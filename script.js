@@ -353,6 +353,7 @@ function addEventListeners() {
     } else {
        currentStep++;  
         addResult();
+        saveResult();
         // Save responses to localStorage before redirecting
         const formResponses = gatherFormResponses();
         localStorage.setItem('formResponses', JSON.stringify(formResponses));
@@ -368,6 +369,24 @@ function addEventListeners() {
       
       currentStep--;
       updateStepVisibility();
+    }
+  });
+}
+
+function saveResult() {
+  document.getElementById("loader").style.display = "block";
+  $.ajax({
+    url: "https://localhost:3000", // URL to send the request to
+    type: "POST", // Type of request
+    dataType: "json",
+    data: JSON.stringify(results), // Expected data type from the server
+    success: function(data) {
+        document.getElementById("loader").style.display = "none";
+        console.log(data); // Handle the response data
+    },
+    error: function(xhr, status, error) {
+        document.getElementById("loader").style.display = "none";
+        console.error("Error: " + error); // Handle errors
     }
   });
 }
