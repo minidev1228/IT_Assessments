@@ -316,6 +316,7 @@ function createGaugeChart(score) {
 // Function to show the result modal
 function showResultModal() {
   const formResponses = JSON.parse(localStorage.getItem('formResponses'));
+  console.log(formResponses);
   const score = calculateScore(formResponses);
 
   const resultModalContent = document.getElementById('result-modal-content');
