@@ -9,9 +9,7 @@ function calculateScore(formResponses) {
         if (typeof response === 'string' && response.trim() === '') {
             // Skip empty responses
             return;
-        }
-
-        if (response === 'Yes') {
+        } else if (response === 'Yes') {
             totalScore += 10; // Full points for "Yes"
         } else if (response === 'No') {
             totalScore += 0;  // No points for "No"
