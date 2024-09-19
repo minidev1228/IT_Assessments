@@ -1,22 +1,39 @@
 async function handleDownload() {
     const content = document.createElement('div');
+    content.classList.add("container");
     let htmlContent = '';
+    let now = new Date();
+    htmlContent = `${htmlContent} <div class="cover">
+    <h1>IT Assessment Report</h1>
+    <div class="info-block">
+        <p>Name: ${results[results.length - 1][1]}</p>
+        <p>Email: ${results[results.length - 1][4]}</p>
+        <p>Phone: ${results[results.length - 1][7]}</p>
+        <p>Generated On: ${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}, ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}</p>
+    </div>
+    </div> <div class="page-break"></div><div class="score-section">
+    Score: ${myScore}%
+    </div><br />`
+    let idd = 1;
     results.forEach((result, id) => {
-        if(id%2 === 0) htmlContent = `${htmlContent} <h3>${result[0]}</h3>`;
+        if(id === results.length - 1 || id%2 === 0) return; 
         else {
             result.forEach((item, id)=>{
-                if(id%3 === 0) htmlContent = `${htmlContent} <h5>${item}</h5>`;
-                else if(id%3 === 1) htmlContent = `${htmlContent} <h6>${item}</h6>`;
+                if(id%3 === 0) htmlContent = `${htmlContent} <div class="section">
+                <h2><span class="icon">${idd}</span>${item.split(".")[1]}</h2>`;
+                else if(id%3 === 1){
+                        htmlContent = `${htmlContent} <p>Answer: ${item}</p>
+                    </div>`
+                    idd++;
+                };
             })
         }
     })
-    htmlContent = `${htmlContent} ${createGaugeChart(myScore)}`;
-    htmlContent = `${htmlContent} <h3>${finalResult[0]}</h3>`
-    htmlContent = `${htmlContent} <h5>${finalResult[1]}</h5>`
-    htmlContent = `${htmlContent} <hr> <h6>${finalResult[2]}</h6>`
-    htmlContent = `${htmlContent} <hr> <h6>${finalResult[3]}</h6>`
-    htmlContent = `${htmlContent} <hr> <h6>${finalResult[4]}</h6>`
-    htmlContent = `${htmlContent} <hr> <h6>${finalResult[5]}</h6>`
+    htmlContent = `${htmlContent} <br /> <div class="closing-page">
+        <h2>Thank You for Completing the IT Assessment!</h2>
+    </div><footer>
+    &copy; 2024 IT Assessment Report | Powered by CMIT Solutions
+    </footer>`
     content.innerHTML = htmlContent;
     const filename = 'result.pdf';
     try {
@@ -26,7 +43,8 @@ async function handleDownload() {
             image: { type: 'jpeg', quality: 0.98 },
             jsPDF: {
                 format: 'letter',
-                orientation: 'portrait'
+                orientation: 'portrait',
+                putTotalPages: true 
             }
         };
         await html2pdf().set(opt).from(content).save();

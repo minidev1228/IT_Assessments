@@ -1,0 +1,99 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    page-break-inside: avoid;
+}
+/* Cover Page Styling */
+.cover {
+    background-color: #007bff;
+    color: white;
+    height: 100vh; /* Full A4 page */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    text-align: center;
+    border-radius: 15px;
+}
+.cover h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+}
+.cover p {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.info-block {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+.info-block p {
+    font-size: 1.2em;
+}
+.section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+    page-break-inside: avoid;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+.section h2 {
+    font-size: 1.5em;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+.section p {
+    font-size: 1.1em;
+    color: #495057;
+    line-height: 1.7;
+}
+.score-section {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+}
+.icon {
+    display: inline-block;
+    background-color: #007bff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-size: 0.7em;
+    margin-right: 10px;
+}
+footer {
+    text-align: center;
+    background-color: #e9ecef;
+    padding: 20px;
+    font-size: 0.9em;
+    color: #6c757d;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+.page-break {
+    page-break-before: always;
+}
+/* Closing Page Styling */
+.closing-page {
+    background-color: #e9ecef;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+}
+.closing-page h2 {
+    font-size: 3em;
+    color: #343a40;
+}

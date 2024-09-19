@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Assessment Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 30mm 20mm;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .cover-page {
+            text-align: center;
+            padding: 40px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .cover-page h1 {
+            font-size: 48px;
+        }
+
+        .cover-page p {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .details {
+            margin-top: 50px;
+            font-size: 18px;
+        }
+
+        .qa-card {
+            background-color: #f8f9fa;
+            border: 1px solid #007bff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page cover-page">
+        <h1><i class="fas fa-shield-alt"></i> IT Assessment Report</h1>
+        <p><i class="far fa-calendar-alt"></i> Generated On: <span id="generatedOn"></span></p>
+        <div class="details">
+            <p><i class="fas fa-user"></i> Name: <span id="userName"></span></p>
+            <p><i class="fas fa-envelope"></i> Email: <span id="userEmail"></span></p>
+            <p><i class="fas fa-phone"></i> Phone: <span id="userPhone"></span></p>
+        </div>
+        <p><i class="fas fa-star"></i> Score: <span id="userScore"></span>%</p>
+    </div>
+
+    <div class="page qa-section">
+        <h2 class="section-title">Assessment Questions and Answers</h2>
+        <div id="qaContainer"></div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Your Company Name. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        // Fetch data from URL parameters and inject them into the template
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('userName').innerText = urlParams.get('name');
+        document.getElementById('userEmail').innerText = urlParams.get('email');
+        document.getElementById('userPhone').innerText = urlParams.get('phone');
+        document.getElementById('userScore').innerText = urlParams.get('score');
+        document.getElementById('generatedOn').innerText = new Date().toLocaleString();
+      
+        const qaContainer = document.getElementById('qaContainer');
+        const questions = JSON.parse(decodeURIComponent(urlParams.get('questions')));
+        questions.forEach(q => {
+          const qaCard = document.createElement('div');
+          qaCard.classList.add('qa-card');
+          qaCard.innerHTML = `<h5><i class="fas fa-question"></i> ${q.question}</h5><p><i class="fas fa-check-circle"></i> ${q.answer}</p>`;
+          qaContainer.appendChild(qaCard);
+        });
+      </script>
+      
+</body>
+
+</html>

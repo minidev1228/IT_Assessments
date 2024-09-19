@@ -10,12 +10,19 @@
 
     <!-- Bootstrap 5 for Layout -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./pdf_style.css">
-
 
     <!-- ZingChart CDN for rendering gauge meter -->
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- jsPDF for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.10.0/dist/email.min.js"></script>
+
 
     <!-- Custom CSS -->
     <style>
@@ -52,7 +59,7 @@
         }
 
         /* Question block styling */
-        .question-div {
+        .question-block {
             padding: 20px;
             background-color: #eaf6ff; /* Soft Sky Blue Background */
             border-radius: 12px;
@@ -61,7 +68,7 @@
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05); /* Subtle shadow */
         }
 
-        .question-div h4 {
+        .question-block h4 {
             font-size: 18px;
             color: #333;
             font-weight: bold;
@@ -163,13 +170,6 @@
             font-size: 30px;
         }
 
-        .download-button{
-            width: 100%;
-            margin-top: 10px;
-            margin-bottom: 8px;    
-        }
-        
-
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .icon-container {
@@ -205,104 +205,112 @@
             counter-reset: question;
         }
 
+        #download-pdf {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
     </style>
 </head>
 <body>
-    <div>
-        <div class="container mt-5">
-            <!-- Form Title -->
-            <div class="text-center mb-4">
-                <h2 class="form-title">IT Assessment Form</h2>
-            </div>
-    
-            <!-- Progress Icons -->
-            <div class="progressbar d-flex justify-content-center mb-4">
-                <div id="section-icons" class="d-flex justify-content-center">
-                    <!-- Icons will be dynamically inserted here -->
-                </div>
-            </div>
-    
-            <!-- Form Starts Here -->
-            <form id="multi-step-form" class="form-container shadow-lg p-4 bg-white rounded">
-                <div id="form-content">
-                    <!-- Sections will be dynamically generated here -->
-                </div>
-    
-                <!-- Navigation Buttons -->
-                <div class="d-flex justify-content-between mt-4">
-                    <button type="button" class="btn btn-prev" id="prev-btn" disabled>Back</button>
-                    <button type="button" class="btn btn-next" id="next-btn">Next</button>
-                </div>
-            </form>
+    <div class="container mt-5">
+        <!-- Form Title -->
+        <div class="text-center mb-4">
+            <h2 class="form-title">IT Assessment Form</h2>
         </div>
-    
-        <!-- Modal for collecting user details -->
-        <div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="userInfoModalLabel">Enter Your Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="user-info-form">
-                  <div class="mb-3">
-                    <label for="userName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="userName" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userEmail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="userEmail" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="userPhone" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="userPhone" required>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-              </div>
+
+        <!-- Progress Icons -->
+        <div class="progressbar d-flex justify-content-center mb-4">
+            <div id="section-icons" class="d-flex justify-content-center">
+                <!-- Icons will be dynamically inserted here -->
             </div>
+        </div>
+
+        <!-- Form Starts Here -->
+        <form id="multi-step-form" class="form-container shadow-lg p-4 bg-white rounded">
+            <div id="form-content">
+                <!-- Sections will be dynamically generated here -->
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-prev" id="prev-btn" disabled>Back</button>
+                <button type="button" class="btn btn-next" id="next-btn">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal for collecting user details -->
+    <div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userInfoModalLabel">Enter Your Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        </div>
-    
-        <!-- Modal for displaying results -->
-      <!-- Modal for displaying results -->
-      <div class="modal" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="resultModalLabel">Your Result</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="result-modal-content">
-              <!-- Result content will be dynamically injected here -->
-            </div>
-            <div style="padding: 0px 19px;">
-                <h3 id="description" style="font-weight: bold;"></h3>
-                <h5 id="comments" style="font-weight: 600;"></h5>
-                <hr>
-                <h6 id="rec1"></h6>
-                <hr>
-                <h6 id="rec2"></h6>
-                <hr>
-                <h6 id="rec3"></h5>
-                <hr>
-                <h6 id="rec4"></h6>
-                <button class="btn btn-primary download-button" id="download_button">Donwload</button>
-            </div>
+          <div class="modal-body">
+            <form id="user-info-form">
+              <div class="mb-3">
+                <label for="userName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="userName" required>
+              </div>
+              <div class="mb-3">
+                <label for="userEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="userEmail" required>
+              </div>
+              <div class="mb-3">
+                <label for="userPhone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="userPhone" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
           </div>
         </div>
       </div>
-    </div>      
+    </div>
 
+    <!-- Modal for displaying results -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultModalLabel">Your Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="result-modal-content">
+                    <!-- Dynamic content from JS will appear here -->
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" id="download-pdf" class="btn btn-primary">Download PDF</button> -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="send-email-btn" class="btn btn-primary">Send Email with PDF</button>
+
+                    <button id="view-report-btn" class="btn btn-primary">View Full Report</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  
     <!-- Script Links -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
-    <script src="result.js"></script>
-    <script src="download.js"></script>
-    <script src="message.js"></script>
+    <script src="pdf.js"></script>
+    <script>
+      // Clear form data when visiting the "Thank You" page
+      window.onpageshow = function(event) {
+          if (event.persisted || window.performance && window.performance.navigation.type == 2) {
+              localStorage.clear();  // Clear all stored form data
+              sessionStorage.clear();  // Clear session data
+              window.location.reload();  // Reload to start fresh
+          }
+      };
+    </script>
 </body>
 </html>
