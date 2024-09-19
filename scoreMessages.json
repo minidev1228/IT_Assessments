@@ -1,6 +1,8 @@
 {
     "scores": [
       {
+        "low":0,
+        "top":10,
         "range": "0-10",
         "description": "Very Bad",
         "comments": "Your IT infrastructure is in critical condition. Major issues are present that could severely impact your business operations. Without immediate intervention, your system is vulnerable to failures, breaches, and inefficiencies.",
@@ -12,6 +14,8 @@
         ]
       },
       {
+        "low":10,
+        "top":20,
         "range": "10-20",
         "description": "Bad",
         "comments": "Your IT system has multiple weak points, making it difficult to maintain stability and security. Your current setup puts your business at risk for potential downtime and cyber threats.",
@@ -23,6 +27,8 @@
         ]
       },
       {
+        "low":20,
+        "top":30,
         "range": "20-30",
         "description": "Needs Important Improvements",
         "comments": "Your IT infrastructure is operational but contains significant inefficiencies and vulnerabilities. While it may handle day-to-day operations, critical improvements are required to ensure long-term growth and stability.",
@@ -34,6 +40,8 @@
         ]
       },
       {
+        "low":30,
+        "top":40,
         "range": "30-40",
         "description": "Average but You Definitely Need to Improve",
         "comments": "Your IT systems are functional but not optimized. You're experiencing gaps in efficiency and security that could hinder growth if not addressed. While you're maintaining operations, there's significant room for improvement.",
@@ -45,6 +53,8 @@
         ]
       },
       {
+        "low":40,
+        "top":50,
         "range": "40-50",
         "description": "Below Average but Functional",
         "comments": "Your IT environment is stable but far from reaching its full potential. Though there are no immediate critical issues, your infrastructure is not agile or secure enough to support future growth or protect against emerging threats.",
@@ -56,6 +66,8 @@
         ]
       },
       {
+        "low":50,
+        "top":60,
         "range": "50-60",
         "description": "Good but Needs Regular Attention",
         "comments": "Your IT systems are generally well-maintained but not without vulnerabilities. While they may be meeting current business needs, there's a risk of falling behind if you don’t continue to improve security, efficiency, and scalability.",
@@ -67,6 +79,8 @@
         ]
       },
       {
+        "low":60,
+        "top":80,
         "range": "60-80",
         "description": "Strong but Not Leading",
         "comments": "Your IT setup is solid, but there are still areas that need attention to stay competitive in a fast-evolving industry. While you're ahead of many, stagnation can lead to vulnerabilities and inefficiencies that others could exploit.",
@@ -78,6 +92,8 @@
         ]
       },
       {
+        "low":80,
+        "top":100,
         "range": "80-100",
         "description": "Excellent but Not Market Leader",
         "comments": "Your IT infrastructure is robust and well-optimized, but there is always room for improvement. Remaining at this level requires constant innovation and vigilant maintenance. Without continuous effort, even the best systems can become outdated quickly in today’s fast-paced environment.",

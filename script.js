@@ -11,7 +11,10 @@ let currentStep = 0; // Start at the first section
 let totalSteps = 0;
 let formResponses = {}; // Object to store user responses
 let sectionContent = [];
-let results = []
+let results = [];
+let finalResult = [];
+let myScore = 0;
+let isSubmitted = false;
 
 // Fetch the data from Google Sheets
 async function fetchSheetData() {
@@ -111,13 +114,14 @@ function addResult() {
   let questions = section.questions;
   let contents = formContent.children[beforeStep].children;
 
-  currentResult["title"] = `${section.sectionNumber}. ${section.title}`;
-  currentResult["result"] = [];
+  results.push([`${section.sectionNumber}. ${section.title}`]);
+  let rlt = [];
   // currentResult
   questions.forEach((question, idx) => {
     let title = `${idx + 1}. ${question.question}`;
     let answer = "";
     if(question.checkboxType) {
+      // console.log("1======>", title);
       let checkBoxs = contents[idx + 1].children;
       // checkBoxs = checkBoxs.keys(checkBoxs).map((key) => [key, checkBoxs[key]]);
       let IsInit = true;
@@ -128,20 +132,23 @@ function addResult() {
           IsInit = false;
         }
       }
-    } else if(question.dropdownType) {
-      // console.log(contents[idx + 1].getElementsByTagName("select"));
+    } else if(question.dropdownType || question.dropdownOther) {
+      // console.log("2======>", title);
+      console.log(contents[idx + 1].getElementsByTagName("select")[0].value);
       answer = contents[idx + 1].getElementsByTagName("select")[0].value;
     } else {
+      // console.log("3======>", title);
       answer = contents[idx + 1].getElementsByTagName("input")[0].value;
     }
-    currentResult["result"].push({title, answer});
+    rlt.push(title);
+    rlt.push(answer);
+    rlt.push("");
   })
-
+  results.push(rlt);
   console.log(questions);
   console.log(contents);
   console.log(currentResult);
-  results.push(currentResult);
-  console.log(results);
+  console.log(JSON.stringify(results));
 }
 
 // Update the visibility of sections (steps) and icons
@@ -179,7 +186,7 @@ function createFormSections(sectionContent) {
     let sectionHTML = `<h3>${section.sectionNumber}. ${section.title}</h3>`;
 
     section.questions.forEach((q, idx) => {
-      sectionHTML += `<div class="question-block">`;
+      sectionHTML += `<div class="question-div">`;
       sectionHTML += `<label for="question-${section.sectionNumber}-${idx}"><span class="question-label">${q.question}`;
       
       // Add asterisk if the question is required
@@ -231,6 +238,7 @@ function createFormSections(sectionContent) {
     });
 
     formStep.innerHTML = sectionHTML;
+    console.log(formStep);
     formContent.appendChild(formStep);
   });
 
@@ -286,6 +294,7 @@ function calculateScore(formResponses) {
 
 // Function to create a gauge chart
 function createGaugeChart(score) {
+  myScore = score;
   return `
     <svg width="200" height="120">
       <circle cx="100" cy="100" r="65" fill="none" stroke="#e5e5e5" stroke-width="25"></circle>
@@ -323,6 +332,7 @@ function showResultModal() {
 
   const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
   resultModal.show();
+  displayComment(score);
 }
 
 // Save form responses
@@ -366,6 +376,7 @@ function addEventListeners() {
     if (currentStep > 0) {
       
       results.pop(results[results.length]);
+      results.pop(results[results.length]);
       
       currentStep--;
       updateStepVisibility();
@@ -374,22 +385,20 @@ function addEventListeners() {
 }
 
 function saveResult() {
-  document.getElementById("loader").style.display = "block";
+  if(isSubmitted) return;
+  isSubmitted = true;
   $.ajax({
-    url: "https://localhost:3000", // URL to send the request to
+    url: "https://it-assessments-backend.vercel.app/", // URL to send the request to
     type: "POST", // Type of request
-    dataType: "json",
-    data: JSON.stringify(results), // Expected data type from the server
+    // dataType: "json",
+    data: {rlt: results}, // Expected data type from the server
     success: function(data) {
-        document.getElementById("loader").style.display = "none";
         console.log(data); // Handle the response data
     },
     error: function(xhr, status, error) {
-        document.getElementById("loader").style.display = "none";
         console.error("Error: " + error); // Handle errors
     }
   });
 }
-
 // Initialize form generation
 fetchSheetData();

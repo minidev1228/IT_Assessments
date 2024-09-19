@@ -28,7 +28,7 @@ body {
   font-weight: bold;
 }
 
-.question-block {
+.question-div {
   padding: 20px;
   background-color: #eaf6ff; /* Soft Sky Blue Background */
   border-radius: 12px;
@@ -37,7 +37,7 @@ body {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
-.question-block h4 {
+.question-div h4 {
   font-size: 18px;
   color: #333;
   font-weight: bold;
