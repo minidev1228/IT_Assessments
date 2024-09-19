@@ -288,14 +288,12 @@ function calculateScore(formResponses) {
         } else if (Array.isArray(response)) {
             console.log(response, response.includes('Yes') ? 10 : 0);
             totalScore += response.includes('Yes') ? 10 : 0;
-        } else {
-          console.log(response, typeof response, response.length);
-          totalScore += 10;
         }
     });
 
-    const scorePercentage = (totalScore / maxPossibleScore) * 100; // Calculate the percentage
-    
+    let scorePercentage = (totalScore / maxPossibleScore) * 100; // Calculate the percentage
+    if(scorePercentage === 0) scorePercentage = 5;
+    if(scorePercentage === 100) scorePercentage = 95;
     return Math.round(scorePercentage); // Round the score to an integer for display
 }
 

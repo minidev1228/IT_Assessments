@@ -13,7 +13,9 @@ async function handleDownload() {
     </div>
     </div> <div class="page-break"></div><div class="score-section">
     Score: ${myScore}%
-    </div><br />`
+    </div>
+    ${createGaugeChart(myScore)}
+    <br />`
     let idd = 1;
     results.forEach((result, id) => {
         if(id === results.length - 1 || id%2 === 0) return; 
