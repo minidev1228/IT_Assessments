@@ -15,6 +15,7 @@ let results = [];
 let finalResult = [];
 let myScore = 0;
 let isSubmitted = false;
+let totalQuestions = 0;
 
 // Fetch the data from Google Sheets
 async function fetchSheetData() {
@@ -212,6 +213,7 @@ function createFormSections(sectionContent) {
       } else if (q.dropdownType) {
         let dropdown = `<select class="form-select" name="question-${section.sectionNumber}-${idx}" ${q.required ? 'required' : ''}>`;
         q.dropdownType.split(',').forEach(option => {
+          if(option === "Yes") totalQuestions++;
           dropdown += `<option value="${option}">${option}</option>`;
         });
         dropdown += `</select>`;
@@ -272,7 +274,7 @@ function validateCurrentStep() {
 // Function to calculate total score based on form responses
 function calculateScore(formResponses) {
     let totalScore = 0;
-    const totalQuestions = Object.keys(formResponses).length; // Total number of questions
+    // const totalQuestions = Object.keys(formResponses).length; // Total number of questions
     const maxPossibleScore = totalQuestions * 10; // Each question's "Yes" is worth 10 points
 
     // Loop through each response and calculate the score
