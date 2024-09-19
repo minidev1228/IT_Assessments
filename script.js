@@ -409,5 +409,11 @@ function saveResult() {
     }
   });
 }
+
+function hideModal() {
+  console.log("ok");
+  let resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
+  resultModal.hide();
+}
 // Initialize form generation
 fetchSheetData();
