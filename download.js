@@ -81,6 +81,5 @@ async function handleDownload() {
 const downloadButton = document.getElementById("download_button");
 
 downloadButton.addEventListener('click', () => {
-    // hideModal();
     handleDownload();
 })
