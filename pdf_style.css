@@ -89,6 +89,7 @@ footer {
     background-color: #e9ecef;
     height: 100vh;
     display: flex;
+    page-break-inside: avoid;
     justify-content: center;
     align-items: center;
     text-align: center;
