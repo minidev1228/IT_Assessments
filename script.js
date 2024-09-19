@@ -361,14 +361,14 @@ function addEventListeners() {
         addResult();
         updateStepVisibility();
     } else {
-       currentStep++;  
-        addResult();
-        saveResult();
         // Save responses to localStorage before redirecting
         const formResponses = gatherFormResponses();
         localStorage.setItem('formResponses', JSON.stringify(formResponses));
         // Show result modal dynamically after form submission
         showResultModal();
+        currentStep++;  
+        addResult();
+        saveResult();
     }
   });
   
