@@ -292,9 +292,10 @@ function calculateScore(formResponses) {
     });
 
     let scorePercentage = (totalScore / maxPossibleScore) * 100; // Calculate the percentage
+    scorePercentage = Math.round(scorePercentage);
     if(scorePercentage === 0) scorePercentage = 5;
     if(scorePercentage === 100) scorePercentage = 95;
-    return Math.round(scorePercentage); // Round the score to an integer for display
+    return scorePercentage; // Round the score to an integer for display
 }
 
 // Function to create a gauge chart
