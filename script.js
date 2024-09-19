@@ -277,15 +277,19 @@ function calculateScore(formResponses) {
 
     // Loop through each response and calculate the score
     Object.values(formResponses).forEach(response => {
-        if (response === 'Yes') {
+        if (response == 'Yes') {
+          console.log(response, 10);
           totalScore += 10; // Full points for "Yes"
-        } else if (response === 'No') {
+        } else if (String(response) == ' No') {
             totalScore += 0;  // No points for "No"
-        } else if (response === 'Unsure') {
+        } else if (String(response) == ' Unsure') {
+            console.log(response, 5);
             totalScore += 5;  // Partial points for "Unsure"
         } else if (Array.isArray(response)) {
+            console.log(response, response.includes('Yes') ? 10 : 0);
             totalScore += response.includes('Yes') ? 10 : 0;
         } else {
+          console.log(response, typeof response, response.length);
           totalScore += 10;
         }
     });

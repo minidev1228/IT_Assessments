@@ -3,13 +3,14 @@ function calculateScore(formResponses) {
     let totalScore = 0;
     const totalQuestions = Object.keys(formResponses).length; // Total number of questions
     const maxPossibleScore = totalQuestions * 10; // Each question's "Yes" is worth 10 points
-
+    let c = 0;
     // Loop through each response and calculate the score
     Object.values(formResponses).forEach(response => {
         if (typeof response === 'string' && response.trim() === '') {
             // Skip empty responses
             return;
         } else if (response === 'Yes') {
+            c++;
             totalScore += 10; // Full points for "Yes"
         } else if (response === 'No') {
             totalScore += 0;  // No points for "No"
@@ -29,6 +30,8 @@ function calculateScore(formResponses) {
         console.warn('No questions available for scoring.');
         return 0;
     }
+
+    console.log(totalScore, maxPossibleScore, c);
 
     const scorePercentage = (totalScore / maxPossibleScore) * 100; // Calculate the percentage
     return Math.round(scorePercentage); // Round to nearest integer for cleaner display
