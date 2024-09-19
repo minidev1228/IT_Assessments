@@ -272,13 +272,15 @@ function validateCurrentStep() {
 // Function to calculate total score based on form responses
 function calculateScore(formResponses) {
     let totalScore = 0;
+    let c = 0;
     const totalQuestions = Object.keys(formResponses).length; // Total number of questions
     const maxPossibleScore = totalQuestions * 10; // Each question's "Yes" is worth 10 points
 
     // Loop through each response and calculate the score
     Object.values(formResponses).forEach(response => {
         if (response === 'Yes') {
-            totalScore += 10; // Full points for "Yes"
+          c++;  
+          totalScore += 10; // Full points for "Yes"
         } else if (response === 'No') {
             totalScore += 0;  // No points for "No"
         } else if (response === 'Unsure') {
@@ -287,6 +289,8 @@ function calculateScore(formResponses) {
             totalScore += response.includes('Yes') ? 10 : 0;
         }
     });
+
+    console.log(c);
 
     const scorePercentage = (totalScore / maxPossibleScore) * 100; // Calculate the percentage
     return Math.round(scorePercentage); // Round the score to an integer for display
