@@ -290,9 +290,8 @@ function calculateScore(formResponses) {
         }
     });
 
-    console.log(c);
-
     const scorePercentage = (totalScore / maxPossibleScore) * 100; // Calculate the percentage
+    console.log(c, totalScore, maxPossibleScore, scorePercentage);
     return Math.round(scorePercentage); // Round the score to an integer for display
 }
 
