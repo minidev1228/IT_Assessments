@@ -375,7 +375,7 @@ function addEventListeners() {
         showResultModal();
         currentStep++;  
         addResult();
-        saveResult();
+        currentStep--;
     }
   });
   
