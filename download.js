@@ -1,4 +1,7 @@
 async function handleDownload() {
+
+    let resultScript = document.getElementById("resultModal");
+
     const content = document.createElement('div');
     content.classList.add("container");
     let htmlContent = '';
@@ -14,30 +17,7 @@ async function handleDownload() {
     </div> <div class="page-break"></div><div class="score-section">
     Score: ${myScore}%
     </div>
-
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="resultModalLabel">Your Result</h5>
-        </div>
-        <div class="modal-body" id="result-modal-content">
-            <h3>Hi ${results[results.length - 1][1]},</h3>
-            <p>Your assessment is complete. Your score is:</p>
-            ${createGaugeChart(myScore)}
-        </div>
-        <div style="padding: 0px 19px;">
-            <h5 id="comments" style="font-weight: 600;break-inside: avoid;">${finalResult[1]}</h5>
-            <hr>
-            <h6 id="rec1" style="break-inside: avoid;">${finalResult[2]}</h6>
-            <hr>
-            <h6 id="rec2" style="break-inside: avoid;">${finalResult[3]}</h6>
-            <hr>
-            <h6 id="rec3" style="break-inside: avoid;">${finalResult[4]}</h6>
-            <hr>
-            <h6 id="rec4" style="break-inside: avoid;">${finalResult[5]}</h6>
-        </div>
-        </div>
-    </div>
+    ${resultScript.innerHTML}
     <br />`
     let idd = 1;
     results.forEach((result, id) => {

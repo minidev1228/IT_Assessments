@@ -336,12 +336,117 @@ function showResultModal() {
   resultModalContent.innerHTML = `
     <h3>Hi ${userName},</h3>
     <p>Your assessment is complete. Your score is:</p>
-    ${createGaugeChart(score)}
+    <div id='myChart'></div>
   `;
 
   const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
   resultModal.show();
   displayComment(score);
+  renderGaugeChart(score);
+}
+
+function renderGaugeChart(score) {
+  var myConfig = {
+    type: "gauge",
+    globals: {
+        fontSize: 10
+    },
+    plotarea: {
+        marginTop: 80
+    },
+    plot: {
+        size: '100%',
+        valueBox: {
+            placement: 'center',
+            text: '%v', //default
+            fontSize: 20,
+            rules: [
+                {
+                    rule: '%v >= 0',
+                    text: '%v%'
+                }
+            ]
+        }
+    },
+    tooltip: {
+        borderRadius: 5
+    },
+    scaleR: {
+        aperture: 180,
+        minValue: 0,
+        maxValue: 100,
+        step: 1,
+        center: {
+            visible: false
+        },
+        tick: {
+            visible: false
+        },
+        item: {
+            offsetR: 0,
+            rules: [
+                {
+                    rule: '%i == 9',
+                    offsetX: 15
+                }
+            ]
+        },
+        // labels: ['0', '', '', '', '', '', '50', '', '', '', '', '100'],
+        ring: {
+            size: 50,
+            rules: [
+            {
+                  rule: '%v <= 20',
+                  backgroundColor: '#ff0000'
+              },
+              {
+                  rule: '%v > 20 && %v <=40',
+                  backgroundColor: '#ff6666'
+              },
+              {
+                  rule: '%v >40 && %v <= 60',
+                  backgroundColor: '#ffff00'
+              },
+              {
+                  rule: '%v > 60 && %v <= 80',
+                  backgroundColor: '#90EE90'
+              }
+              ,
+              {
+                  rule: '%v > 80 && %v <= 100',
+                  backgroundColor: '#008000'
+              }
+            ]
+        }
+    },
+    refresh: {
+        type: "feed",
+        transport: "js",
+        url: "feed()",
+        interval: 1500,
+        resetTimeout: 1000
+    },
+    series: [
+        {
+            values: [80], // starting value
+            backgroundColor: 'black',
+            indicator: [10, 1, 5, 5, 0.2],
+            animation: {
+                effect: 2,
+                method: 1,
+                sequence: 4,
+                speed: 900
+            },
+        }
+    ]
+};
+
+zingchart.render({
+    id: 'myChart',
+    data: myConfig,
+    height: 400,
+    width: '100%'
+});
 }
 
 // Save form responses

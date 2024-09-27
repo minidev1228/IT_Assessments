@@ -39,9 +39,9 @@ function calculateScore(formResponses) {
 
 // Function to render the gauge chart using ZingChart
 function renderGaugeChart(score) {
-    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    console.log("rendr function is working well!");
 
-    const myConfig = {
+    var myConfig = {
         type: "gauge",
         globals: {
             fontSize: 25
@@ -53,33 +53,36 @@ function renderGaugeChart(score) {
             size: '100%',
             valueBox: {
                 placement: 'center',
-                text: '%v', // Default
+                text: '%v', //default
                 fontSize: 35,
                 rules: [
                     {
-                        rule: '%v >= 80',
+                        rule: '%v >= 700',
                         text: '%v<br>EXCELLENT'
                     },
                     {
-                        rule: '%v < 80 && %v >= 60',
+                        rule: '%v < 700 && %v > 640',
                         text: '%v<br>Good'
                     },
                     {
-                        rule: '%v < 60 && %v >= 40',
+                        rule: '%v < 640 && %v > 580',
                         text: '%v<br>Fair'
                     },
                     {
-                        rule: '%v < 40',
-                        text: '%v<br>Poor'
+                        rule: '%v <  580',
+                        text: '%v<br>Bad'
                     }
                 ]
             }
         },
+        tooltip: {
+            borderRadius: 5
+        },
         scaleR: {
             aperture: 180,
-            minValue: 0,
-            maxValue: 100,
-            step: 10,
+            minValue: 300,
+            maxValue: 850,
+            step: 50,
             center: {
                 visible: false
             },
@@ -95,32 +98,39 @@ function renderGaugeChart(score) {
                     }
                 ]
             },
-            labels: ['0', '', '', '', '', '', '40', '60', '80', '100'],
+            labels: ['300', '', '', '', '', '', '580', '640', '700', '750', '', '850'],
             ring: {
                 size: 50,
                 rules: [
                     {
-                        rule: '%v <= 40',
-                        backgroundColor: '#E53935' // Poor
+                        rule: '%v <= 580',
+                        backgroundColor: '#E53935'
                     },
                     {
-                        rule: '%v > 40 && %v < 60',
-                        backgroundColor: '#FFA726' // Fair
+                        rule: '%v > 580 && %v < 640',
+                        backgroundColor: '#EF5350'
                     },
                     {
-                        rule: '%v >= 60 && %v < 80',
-                        backgroundColor: '#29B6F6' // Good
+                        rule: '%v >= 640 && %v < 700',
+                        backgroundColor: '#FFA726'
                     },
                     {
-                        rule: '%v >= 80',
-                        backgroundColor: '#66BB6A' // Excellent
+                        rule: '%v >= 700',
+                        backgroundColor: '#29B6F6'
                     }
                 ]
             }
         },
+        refresh: {
+            type: "feed",
+            transport: "js",
+            url: "feed()",
+            interval: 1500,
+            resetTimeout: 1000
+        },
         series: [
             {
-                values: [score], // Starting value
+                values: [score], // starting value
                 backgroundColor: 'black',
                 indicator: [10, 10, 10, 10, 0.75],
                 animation: {
@@ -128,7 +138,7 @@ function renderGaugeChart(score) {
                     method: 1,
                     sequence: 4,
                     speed: 900
-                }
+                },
             }
         ]
     };
@@ -149,7 +159,7 @@ if (formResponses && Object.keys(formResponses).length > 0) {
     
     // Ensure score is valid before rendering the chart
     if (score >= 0 && score <= 100) {
-        renderGaugeChart(score);
+        // renderGaugeChart(score);
     } else {
         console.error('Invalid score calculated.');
         const resultModalContent = document.getElementById('result-modal-content');
