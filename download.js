@@ -1,5 +1,5 @@
 async function handleDownload() {
-
+    document.getElementById("download_button").remove();
     let resultScript = document.getElementById("resultModal");
 
     const content = document.createElement('div');

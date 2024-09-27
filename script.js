@@ -346,6 +346,7 @@ function showResultModal() {
 }
 
 function renderGaugeChart(score) {
+  myScore = score;
   var myConfig = {
     type: "gauge",
     globals: {
@@ -375,7 +376,7 @@ function renderGaugeChart(score) {
         aperture: 180,
         minValue: 0,
         maxValue: 100,
-        step: 1,
+        // step: 1,
         center: {
             visible: false
         },
@@ -428,7 +429,7 @@ function renderGaugeChart(score) {
     },
     series: [
         {
-            values: [80], // starting value
+            values: [score], // starting value
             backgroundColor: 'black',
             indicator: [10, 1, 5, 5, 0.2],
             animation: {
