@@ -1,5 +1,5 @@
 async function handleDownload() {
-    document.getElementById("download_button").remove();
+    document.getElementById("download_button").style.display="none";
     let resultScript = document.getElementById("resultModal");
 
     const content = document.createElement('div');
@@ -53,6 +53,7 @@ async function handleDownload() {
             }
         };
         await html2pdf().set(opt).from(content).save();
+        document.getElementById("download_button").style.display="block";
     } catch (error) {
         console.error('Error:', error.message);
     }
